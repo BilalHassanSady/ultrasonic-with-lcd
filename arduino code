@@ -1,0 +1,57 @@
+#include <LiquidCrystal.h> // includes the LiquidCrystal Library
+LiquidCrystal lcd(2, 3, 4, 5, 6, 7); // Creates an LCD object. Parameters: (rs, enable, d4, d5, d6, d7)
+const int trigPin = 12;//echo pin
+const int echoPin = 11;//trig pin
+long duration;
+int distanceCm;
+void setup() {
+lcd.begin(16,2); // Initializes the interface to the LCD screen, and specifies the dimensions (width and height) of the display
+pinMode(trigPin, OUTPUT);
+pinMode(echoPin, INPUT);
+}
+void loop() {
+  //measure distance
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+duration = pulseIn(echoPin, HIGH);
+distanceCm= duration*0.034/2;
+//print distance
+lcd.setCursor(0,1); 
+lcd.print("Distance: "); 
+lcd.print(distanceCm); 
+lcd.print(" cm");
+delay(10);
+
+  if(distanceCm<50){
+   lcd.setCursor(0,0);
+    lcd.print("<");
+    delay(10);
+  }
+  else{
+   lcd.setCursor(0,0);
+    lcd.print("     ");
+  }
+    if(distanceCm<40){
+   lcd.setCursor(0,0);
+    lcd.print("<<");
+    delay(10);
+  }
+    if(distanceCm<30){
+   lcd.setCursor(0,0);
+    lcd.print("<<<");
+    delay(10);
+  }
+    if(distanceCm<20){
+   lcd.setCursor(0,0);
+    lcd.print("<<<<");
+    delay(10);
+  }
+    if(distanceCm<10){
+   lcd.setCursor(0,0);
+    lcd.print("<<<<<");
+    delay(10);
+  }
+}
